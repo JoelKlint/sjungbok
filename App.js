@@ -2,7 +2,7 @@ import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
-// import RootNavigation from './navigation/RootNavigation';
+import RootNavigation from './navigation/RootNavigation';
 import SongsScreen from './screens/SongsScreen'
 
 export default class App extends React.Component {
@@ -19,13 +19,12 @@ export default class App extends React.Component {
       return <AppLoading />;
     } else {
       return (
-        // <View style={styles.container}>
-        //   {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-        //   {Platform.OS === 'android' &&
-        //     <View style={styles.statusBarUnderlay} />}
-        // </View>
-        // <RootNavigation />
-        <SongsScreen />
+        <View style={styles.container}>
+          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+          {Platform.OS === 'android' &&
+            <View style={styles.statusBarUnderlay} />}
+            <RootNavigation />
+        </View>
       );
     }
   }

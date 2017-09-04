@@ -15,12 +15,14 @@ import {
 
 class SongsScreen extends React.Component {
     static navigationOptions = {
-        // title: 'All',
-        header: null,
+        title: 'Songs',
+        // header: null,
     }
 
     state = {
-        songs: {}
+        songs: {},
+        filter: '',
+        visibleSongs: {}
     }
 
     componentWillMount() {
@@ -29,33 +31,57 @@ class SongsScreen extends React.Component {
         .then(res => res.json())
         .then(res => {
             res = R.mapObjIndexed((val, key, obj) => R.assoc('id', key, val))(res)
-            this.setState({songs: res})
+            this.setState({songs: res, visibleSongs: res})
             console.log('Behandlat färdigt data')
         })
         .catch(err => console.error(err))
     }
 
+    updateSongs() {
+        this.setState({
+            visibleSongs: R.filter(song => R.contains(this.state.filter, song.title))(this.state.songs)
+        })            
+    }
+
+    clearFilter() {
+        this.setState({
+            filter: '',
+            visibleSongs: this.state.songs
+        })
+    }
+
     render() {
         return (
             <Container>
-                <Header searchBar rounded >
+                {/* <Header searchBar rounded >
                     <Item>
                         <Icon name="ios-search" />
-                        <Input placeholder="Search" />
+                        <Input 
+                            placeholder="Search" 
+                            onChangeText={text => this.setState({filter: text})}
+                            value={this.state.filter} 
+                        />
+                        {this.renderSearchCloseButton()}
                     </Item>
-                    <Button transparent>
+                    <Button transparent onPress={() => this.updateSongs()}>
                         <Text>Search</Text>
                     </Button>
-                </Header>
+                </Header> */}
                 <Content>
                     <List 
-                        dataArray={this.state.songs}
+                        dataArray={this.state.visibleSongs}
                         renderRow={item => <ListItem><Text>{item.title}</Text></ListItem>}
                     >
                     </List>
                 </Content>
             </Container>
         )
+    }
+
+    renderSearchCloseButton() {
+        if(this.state.filter !== '') {
+            return <Icon name="ios-close-circle" onPress={() => this.clearFilter()}/>
+        }
     }
 }
 

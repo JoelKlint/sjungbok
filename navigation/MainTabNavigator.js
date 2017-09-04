@@ -5,21 +5,16 @@ import { TabNavigator, TabBarBottom } from 'react-navigation';
 
 import Colors from '../constants/Colors';
 
-// import HomeScreen from '../screens/HomeScreen';
 import SongsScreen from '../screens/SongsScreen'
-import LinksScreen from '../screens/LinksScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import StarredScreen from '../screens/StarredScreen';
 
 export default TabNavigator(
   {
-    Home: {
+    Songs: {
       screen: SongsScreen,
     },
-    Links: {
-      screen: LinksScreen,
-    },
-    Settings: {
-      screen: SettingsScreen,
+    Starred: {
+      screen: StarredScreen,
     },
   },
   {
@@ -28,20 +23,16 @@ export default TabNavigator(
         const { routeName } = navigation.state;
         let iconName;
         switch (routeName) {
-          case 'Home':
+          case 'Songs':
             iconName = Platform.OS === 'ios'
               ? `ios-information-circle${focused ? '' : '-outline'}`
               : 'md-information-circle';
             break;
-          case 'Links':
+          case 'Starred':
             iconName = Platform.OS === 'ios'
-              ? `ios-link${focused ? '' : '-outline'}`
-              : 'md-link';
+              ? `ios-star${focused ? '' : '-outline'}`
+              : 'md-star';
             break;
-          case 'Settings':
-            iconName = Platform.OS === 'ios'
-              ? `ios-options${focused ? '' : '-outline'}`
-              : 'md-options';
         }
         return (
           <Ionicons
@@ -56,6 +47,6 @@ export default TabNavigator(
     tabBarComponent: TabBarBottom,
     tabBarPosition: 'bottom',
     animationEnabled: false,
-    swipeEnabled: true,
+    swipeEnabled: false,
   }
 );
