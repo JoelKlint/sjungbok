@@ -32,6 +32,7 @@ class AllSongsScreen extends React.Component {
     }
 
     render() {
+        const { navigation } = this.props
         return (
             <View style={styles.container}>
                 <FlatList 
@@ -41,7 +42,7 @@ class AllSongsScreen extends React.Component {
                         return (
                             <ListItem 
                                 text={item.title} 
-                                onPress={() => console.log('hejsan')}
+                                onPress={() => navigation.navigate('Song', {name: item.title})}
                             />
                         )
                     }}
