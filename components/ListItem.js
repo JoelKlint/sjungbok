@@ -9,6 +9,18 @@ import {
 import { Ionicons } from '@expo/vector-icons'
 
 class ListItem extends React.Component {
+
+    extractStringToRender = () => {
+        const text = this.props.text
+        const maxLength = 40
+        if(text.length > maxLength) {
+            return `${text.substring(0, maxLength-3)}...`
+        }
+        else {
+            return text
+        }
+    }
+
     render() {
         const { onPress } = this.props
 
@@ -20,7 +32,7 @@ class ListItem extends React.Component {
             <TouchableHighlight onPress={onPress}>
                 <View style={styles.container}>
                     <Text style={styles.text}>
-                        {this.props.text}
+                        {this.extractStringToRender()}
                     </Text>
                     <Ionicons 
                         style={styles.arrow}

@@ -42,7 +42,7 @@ class AllSongsScreen extends React.Component {
                         return (
                             <ListItem 
                                 text={item.title} 
-                                onPress={() => navigation.navigate('Song', {name: item.title})}
+                                onPress={() => navigation.navigate('Song', {song: item})}
                             />
                         )
                     }}
