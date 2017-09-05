@@ -5,13 +5,13 @@ import { TabNavigator, TabBarBottom } from 'react-navigation';
 
 import Colors from '../constants/Colors';
 
-import SongsScreen from '../screens/SongsScreen'
+import AllSongsScreen from '../screens/AllSongsScreen'
 import StarredScreen from '../screens/StarredScreen';
 
 export default TabNavigator(
   {
     Songs: {
-      screen: SongsScreen,
+      screen: AllSongsScreen,
     },
     Starred: {
       screen: StarredScreen,

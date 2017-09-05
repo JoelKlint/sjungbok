@@ -2,14 +2,19 @@ import { Notifications } from 'expo';
 import React from 'react';
 import { StackNavigator } from 'react-navigation';
 
-import MainTabNavigator from './MainTabNavigator';
+import BrowseTabNavigator from './BrowseTabNavigator';
+import SongScreen from '../screens/SongScreen'
+
 import registerForPushNotificationsAsync from '../api/registerForPushNotificationsAsync';
 
 const RootStackNavigator = StackNavigator(
   {
-    Main: {
-      screen: MainTabNavigator,
+    Browse: {
+      screen: BrowseTabNavigator,
     },
+    Song: {
+      screen: SongScreen,
+    }
   },
   {
     navigationOptions: () => ({
