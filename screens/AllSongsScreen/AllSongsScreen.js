@@ -5,44 +5,36 @@ import {
     FlatList,
     StyleSheet 
 } from 'react-native'
-import R from 'ramda'
+import { Actions } from 'jumpstate'
 
-import ListItem from '../components/ListItem'
+import { initProps } from '../../screens/SongScreen'
+
+import ListItem from '../../components/ListItem'
 
 class AllSongsScreen extends React.Component {
     static navigationOptions = {
         title: 'Songs',
     }
 
-    state = {
-        songs: {},
-        filter: '',
-    }
-
     componentWillMount() {
-        console.log('WILL FETCH SONGS')
-        fetch('http://www.dsek.se/arkiv/sanger/api.php?all')
-        .then(res => res.json())
-        .then(res => {
-            res = R.mapObjIndexed((val, key, obj) => R.assoc('id', key, val))(res)
-            this.setState({songs: res})
-            console.log(`Fetched ${R.values(res).length} songs`)
-        })
-        .catch(err => console.error(err))
+        Actions.getAllSongs()
     }
 
     render() {
-        const { navigation } = this.props
+        const { navigation, songs } = this.props
         return (
             <View style={styles.container}>
                 <FlatList 
-                    data={R.values(this.state.songs)}
+                    data={songs}
                     keyExtractor={(item, index) => item.id}
                     renderItem={({item}) => {
                         return (
                             <ListItem 
                                 text={item.title} 
-                                onPress={() => navigation.navigate('Song', {song: item})}
+                                onPress={() => {
+                                    Actions.setCurrentSong(item.id)
+                                    navigation.navigate('Song', initProps(item.id))
+                                }}
                             />
                         )
                     }}

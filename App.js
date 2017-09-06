@@ -4,6 +4,9 @@ import { AppLoading, Asset, Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import RootNavigation from './navigation/RootNavigation';
 
+import store from './state'
+import { Provider } from 'react-redux'
+
 export default class App extends React.Component {
   state = {
     assetsAreLoaded: false,
@@ -22,7 +25,9 @@ export default class App extends React.Component {
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
           {Platform.OS === 'android' &&
             <View style={styles.statusBarUnderlay} />}
-            <RootNavigation />
+            <Provider store={store}>
+              <RootNavigation />
+            </Provider>
         </View>
       );
     }
