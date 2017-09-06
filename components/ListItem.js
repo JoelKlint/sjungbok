@@ -30,15 +30,17 @@ class ListItem extends React.Component {
 
         return (
             <TouchableHighlight onPress={onPress}>
-                <View style={styles.container}>
-                    <Text style={styles.text}>
-                        {this.extractStringToRender()}
-                    </Text>
-                    <Ionicons 
-                        style={styles.arrow}
-                        name={iconName} 
-                        size={20}
-                    />
+                <View style={styles.background}>
+                    <View style={styles.container}>
+                        <Text style={styles.text}>
+                            {this.extractStringToRender()}
+                        </Text>
+                        <Ionicons 
+                            style={styles.arrow}
+                            name={iconName} 
+                            size={20}
+                        />
+                    </View>
                 </View>
             </TouchableHighlight>
         )
@@ -46,12 +48,15 @@ class ListItem extends React.Component {
 }
 
 const styles = StyleSheet.create({
+    background: {
+        backgroundColor: '#eee',
+    },
     container: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingHorizontal: 20,
-        backgroundColor: '#eee',
+        marginLeft: 20,
+        paddingRight: 20,
         borderBottomWidth: 1, 
         borderColor: '#aaa',
     },
