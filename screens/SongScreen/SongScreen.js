@@ -7,6 +7,7 @@ import {
     TouchableWithoutFeedback
 } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
+import Colors from '../../constants/Colors'
 import R from 'ramda'
 
 class AllSongsScreen extends React.Component {
@@ -69,6 +70,7 @@ export default AllSongsScreen
 
 const styles = StyleSheet.create({
     container: {
+        backgroundColor: Colors.background,
     },
     text: {
         margin: 20,

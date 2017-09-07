@@ -5,6 +5,7 @@ import {
     StyleSheet
 } from 'react-native'
 import PropTypes from 'prop-types'
+import Colors from '../constants/Colors'
 
 import ListItem from './ListItem'
 
@@ -39,7 +40,7 @@ export default SongList
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#eee',
+        backgroundColor: Colors.background,
         flex: 1,
     }
 })

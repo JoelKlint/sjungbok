@@ -7,10 +7,11 @@ import {
     Platform, 
 } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
+import Colors from '../constants/Colors'
 
 class ListItem extends React.Component {
 
-    extractStringToRender = () => {
+    extractTitleString = () => {
         const { song } = this.props
         const maxLength = 40
         if(song.title.length > maxLength) {
@@ -19,6 +20,20 @@ class ListItem extends React.Component {
         else {
             return song.title
         }
+    }
+
+    extractMelodyString = () => {
+        const { song } = this.props
+        const maxLength = 35
+        let melody = ''
+        const melodyTitle = song.melodyTitle || ''
+        if(melodyTitle.length > maxLength) {
+            melody = `${melodyTitle.substring(0, maxLength-3)}...`
+        }
+        else {
+            melody = melodyTitle
+        }
+        return 'mel: ' + melody
     }
 
     render() {
@@ -32,9 +47,14 @@ class ListItem extends React.Component {
             <TouchableHighlight onPress={() => onPress(song.id)}>
                 <View style={styles.background}>
                     <View style={styles.container}>
-                        <Text style={styles.text}>
-                            {this.extractStringToRender()}
-                        </Text>
+                        <View style={styles.textContainer} >
+                            <Text style={styles.title}>
+                                {this.extractTitleString()}
+                            </Text>
+                            <Text style={styles.melody}>
+                                {this.extractMelodyString()}
+                            </Text>
+                        </View>
                         <Ionicons 
                             style={styles.arrow}
                             name={iconName} 
@@ -49,7 +69,7 @@ class ListItem extends React.Component {
 
 const styles = StyleSheet.create({
     background: {
-        backgroundColor: '#eee',
+        backgroundColor: Colors.background,
     },
     container: {
         flexDirection: 'row',
@@ -60,10 +80,18 @@ const styles = StyleSheet.create({
         borderBottomWidth: 0.5, 
         borderColor: '#aaa',
     },
-    text: {
+    textContainer: {
         flex: 1,
-        marginVertical: 18,
-        fontSize: 16,
+        marginVertical: 18
+    },
+    title: {
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+    melody: {
+        fontSize: 15,
+        fontStyle: 'italic',
+        color: Colors.subText
     },
     arrow: {
         flex: 0,
