@@ -4,6 +4,7 @@ import {
     FlatList,
     StyleSheet
 } from 'react-native'
+import PropTypes from 'prop-types'
 
 import ListItem from './ListItem'
 
@@ -29,10 +30,16 @@ class SongList extends React.Component {
     }
 }
 
+SongList.propTypes = {
+    songs: PropTypes.array.isRequired,
+    onPress: PropTypes.func
+}
+
 export default SongList
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#eee'
+        backgroundColor: '#eee',
+        flex: 1,
     }
 })

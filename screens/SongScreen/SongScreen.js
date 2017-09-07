@@ -11,9 +11,9 @@ import R from 'ramda'
 
 class AllSongsScreen extends React.Component {
     static navigationOptions = ({ navigation }) => {
-        const { title, favourites, toggleFavourite } = navigation.state.params
+        const { title, isFavourite, toggleFavourite } = navigation.state.params
         let iconName = ''
-        switch(favourites) {
+        switch(isFavourite) {
             case true:
                 iconName = Platform.OS === 'ios' 
                     ? 'ios-heart' 
@@ -34,7 +34,7 @@ class AllSongsScreen extends React.Component {
                         name={iconName} 
                         style={styles.headerStar}
                         size={25}
-                        color={favourites === true ? 'red' : 'black'}
+                        color={isFavourite === true ? 'red' : 'black'}
                     />
                 </TouchableWithoutFeedback>
             )
@@ -46,8 +46,8 @@ class AllSongsScreen extends React.Component {
         const props = this.props
         const navProps = this.props.navigation.state.params
         let newParams = {}
-        if(nextProps.favourites !== props.favourites)
-            newParams.favourites = nextProps.favourites
+        if(nextProps.isFavourite !== props.isFavourite)
+            newParams.isFavourite = nextProps.isFavourite
         if(navProps.title !== nextProps.song.title)
             newParams.title = nextProps.song.title
         if(Object.keys(newParams).length !== 0) {
@@ -71,7 +71,6 @@ const styles = StyleSheet.create({
     container: {
     },
     text: {
-        textAlign: 'center',
         margin: 20,
         fontSize: 20,
     },

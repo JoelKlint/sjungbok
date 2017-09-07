@@ -10,15 +10,21 @@ const getCurrentSong = createSelector(
     (songs, id) => R.propOr({}, id, songs)
 )
 
-const getAllFavourites = state => R.propOr({}, 'favourites', state)
+const getAllFavouritesId = state => R.propOr([], 'favourites', state)
+
+const getAllFavourites = createSelector(
+    [getAllFavouritesId, getAllSongs],
+    (favIds, songs) => R.filter(song => R.contains(song.id, favIds))(songs)
+)
 
 const getCurrentSongIsFavourite = createSelector(
-    [getAllFavourites, getCurrentSong],
-    (favourites, song) => R.propEq(song.id, true, favourites)
+    [getAllFavouritesId, getCurrentSong],
+    (favouritesIds, song) => R.contains(song.id, favouritesIds)
 )
 
 export default {
     getAllSongs,
+    getAllFavouritesId,
     getAllFavourites,
     getCurrentSong,
     getCurrentSongIsFavourite,

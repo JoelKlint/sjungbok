@@ -12,7 +12,7 @@ const state = State({
             song: undefined
         },
         songs: {},
-        favourites: {},
+        favourites: [],
     },
 
     setCurrentSong(state, id) {
@@ -24,14 +24,18 @@ const state = State({
     },
 
     toggleFavourite(state, songId) {
-        const currentFavourites = R.pathOr(false, ['favourites', songId], state)
-        switch(currentFavourites) {
+        const isFavourite = R.contains(songId, state.favourites)
+        let newFavourites
+        switch(isFavourite) {
             case true:
-                return R.dissocPath(['favourites', songId], state)
+                newFavourites = R.without([songId], state.favourites)
+                break;
             case false:
             default:
-                return R.assocPath(['favourites', songId], true, state)
+                newFavourites = R.append(songId, state.favourites)
+                break;
         }
+        return R.assoc('favourites', newFavourites, state)
     }
 
 })
