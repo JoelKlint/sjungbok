@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
     },
     headerStar: {
-        marginRight: 20,
+        paddingVertical: 8,
+        paddingHorizontal: 15,
     }
 })
