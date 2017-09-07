@@ -2,9 +2,9 @@ import React from 'react'
 import { Text } from 'react-native'
 import R from 'ramda'
 
-class StarredScreen extends React.Component {
+class FavouritesScreen extends React.Component {
     static navigationOptions = {
-        title: 'Starred',
+        title: 'My Hearts',
     }
 
     render() {
@@ -14,4 +14,4 @@ class StarredScreen extends React.Component {
     }
 }
 
-export default StarredScreen
+export default FavouritesScreen

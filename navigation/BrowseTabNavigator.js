@@ -6,15 +6,15 @@ import { TabNavigator, TabBarBottom } from 'react-navigation';
 import Colors from '../constants/Colors';
 
 import AllSongsScreen from '../screens/AllSongsScreen'
-import StarredScreen from '../screens/StarredScreen';
+import FavouritesScreen from '../screens/FavouritesScreen';
 
 export default TabNavigator(
   {
     Songs: {
       screen: AllSongsScreen,
     },
-    Starred: {
-      screen: StarredScreen,
+    Favourites: {
+      screen: FavouritesScreen,
     },
   },
   {
@@ -28,10 +28,10 @@ export default TabNavigator(
               ? `ios-information-circle${focused ? '' : '-outline'}`
               : 'md-information-circle';
             break;
-          case 'Starred':
+          case 'Favourites':
             iconName = Platform.OS === 'ios'
-              ? `ios-star${focused ? '' : '-outline'}`
-              : 'md-star';
+              ? `ios-heart${focused ? '' : '-outline'}`
+              : 'md-heart';
             break;
         }
         return (
