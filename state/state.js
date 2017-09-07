@@ -12,7 +12,7 @@ const state = State({
             song: undefined
         },
         songs: {},
-        stars: {},
+        favourites: {},
     },
 
     setCurrentSong(state, id) {
@@ -23,14 +23,14 @@ const state = State({
         return R.assoc('songs', songs, state)
     },
 
-    toggleStar(state, songId) {
-        const currentlyStarred = R.pathOr(false, ['stars', songId], state)
-        switch(currentlyStarred) {
+    toggleFavourite(state, songId) {
+        const currentFavourites = R.pathOr(false, ['favourites', songId], state)
+        switch(currentFavourites) {
             case true:
-                return R.dissocPath(['stars', songId], state)
+                return R.dissocPath(['favourites', songId], state)
             case false:
             default:
-                return R.assocPath(['stars', songId], true, state)
+                return R.assocPath(['favourites', songId], true, state)
         }
     }
 

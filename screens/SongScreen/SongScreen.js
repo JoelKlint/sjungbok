@@ -11,9 +11,9 @@ import R from 'ramda'
 
 class AllSongsScreen extends React.Component {
     static navigationOptions = ({ navigation }) => {
-        const { title, starred, toggleStar } = navigation.state.params
+        const { title, favourites, toggleFavourite } = navigation.state.params
         let iconName = ''
-        switch(starred) {
+        switch(favourites) {
             case true:
                 iconName = Platform.OS === 'ios' 
                     ? 'ios-heart' 
@@ -29,12 +29,12 @@ class AllSongsScreen extends React.Component {
         return {
             title: title,
             headerRight: (
-                <TouchableWithoutFeedback onPress={toggleStar}>
+                <TouchableWithoutFeedback onPress={toggleFavourite}>
                     <Ionicons 
                         name={iconName} 
                         style={styles.headerStar}
                         size={25}
-                        color={starred === true ? 'red' : 'black'}
+                        color={favourites === true ? 'red' : 'black'}
                     />
                 </TouchableWithoutFeedback>
             )
@@ -46,8 +46,8 @@ class AllSongsScreen extends React.Component {
         const props = this.props
         const navProps = this.props.navigation.state.params
         let newParams = {}
-        if(nextProps.starred !== props.starred)
-            newParams.starred = nextProps.starred
+        if(nextProps.favourites !== props.favourites)
+            newParams.favourites = nextProps.favourites
         if(navProps.title !== nextProps.song.title)
             newParams.title = nextProps.song.title
         if(Object.keys(newParams).length !== 0) {

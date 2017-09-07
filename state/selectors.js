@@ -10,16 +10,16 @@ const getCurrentSong = createSelector(
     (songs, id) => R.propOr({}, id, songs)
 )
 
-const getAllStars = state => R.propOr({}, 'stars', state)
+const getAllFavourites = state => R.propOr({}, 'favourites', state)
 
-const getCurrentSongIsStarred = createSelector(
-    [getAllStars, getCurrentSong],
-    (stars, song) => R.propEq(song.id, true, stars)
+const getCurrentSongIsFavourite = createSelector(
+    [getAllFavourites, getCurrentSong],
+    (favourites, song) => R.propEq(song.id, true, favourites)
 )
 
 export default {
     getAllSongs,
-    getAllStars,
+    getAllFavourites,
     getCurrentSong,
-    getCurrentSongIsStarred,
+    getCurrentSongIsFavourite,
 }

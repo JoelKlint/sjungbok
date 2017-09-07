@@ -8,16 +8,15 @@ export const navigationProps = (id) => {
     const song = Selectors.getCurrentSong(state)
     return {
         title: song.title,
-        starred: Selectors.getCurrentSongIsStarred(state),
-        toggleStar: () => Actions.toggleStar(song.id),
+        favourites: Selectors.getCurrentSongIsFavourite(state),
+        toggleFavourite: () => Actions.toggleFavourite(song.id),
     }
 }
 
 const stateful = connect((state, props) => {
-    const song = Selectors.getCurrentSong(state)
     return {
-        song: song,
-        starred: Selectors.getCurrentSongIsStarred(state)
+        song: Selectors.getCurrentSong(state),
+        favourites: Selectors.getCurrentSongIsFavourite(state)
     }
 })
 
