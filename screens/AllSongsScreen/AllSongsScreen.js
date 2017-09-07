@@ -1,15 +1,8 @@
 import React from 'react'
-import { 
-    View, 
-    Text, 
-    FlatList,
-    StyleSheet 
-} from 'react-native'
 import { Actions } from 'jumpstate'
 
-import { initProps } from '../../screens/SongScreen'
-
-import ListItem from '../../components/ListItem'
+import SongList from '../../components/SongList'
+import { navigationProps } from '../SongScreen'
 
 class AllSongsScreen extends React.Component {
     static navigationOptions = {
@@ -21,33 +14,17 @@ class AllSongsScreen extends React.Component {
     }
 
     render() {
-        const { navigation, songs } = this.props
+        const { songs, navigation } = this.props
         return (
-            <View style={styles.container}>
-                <FlatList 
-                    data={songs}
-                    keyExtractor={(item, index) => item.id}
-                    renderItem={({item}) => {
-                        return (
-                            <ListItem 
-                                text={item.title} 
-                                onPress={() => {
-                                    Actions.setCurrentSong(item.id)
-                                    navigation.navigate('Song', initProps(item.id))
-                                }}
-                            />
-                        )
-                    }}
-                />
-            </View>
+            <SongList 
+                songs={songs}
+                onPress={id => {
+                    Actions.setCurrentSong(id)
+                    navigation.navigate('Song', navigationProps(id))
+                }}
+            />
         )
     }
 }
 
 export default AllSongsScreen
-
-const styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#eee'
-    }
-})

@@ -3,7 +3,7 @@ import Selectors from '../../state/selectors'
 import { connect } from 'react-redux'
 import { Actions, getState } from 'jumpstate'
 
-export const initProps = (id) => {
+export const navigationProps = (id) => {
     const state = getState()
     const song = Selectors.getCurrentSong(state)
     return {

@@ -11,25 +11,25 @@ import { Ionicons } from '@expo/vector-icons'
 class ListItem extends React.Component {
 
     extractStringToRender = () => {
-        const text = this.props.text
+        const { song } = this.props
         const maxLength = 40
-        if(text.length > maxLength) {
-            return `${text.substring(0, maxLength-3)}...`
+        if(song.title.length > maxLength) {
+            return `${song.title.substring(0, maxLength-3)}...`
         }
         else {
-            return text
+            return song.title
         }
     }
 
     render() {
-        const { onPress } = this.props
+        const { song, onPress } = this.props
 
         const iconName = Platform.OS === 'ios' 
             ? 'ios-arrow-forward'
             : 'md-arrow-forward'
 
         return (
-            <TouchableHighlight onPress={onPress}>
+            <TouchableHighlight onPress={() => onPress(song.id)}>
                 <View style={styles.background}>
                     <View style={styles.container}>
                         <Text style={styles.text}>
