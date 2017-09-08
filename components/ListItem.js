@@ -30,6 +30,9 @@ class ListItem extends React.Component {
         if(melodyTitle.length > maxLength) {
             melody = `${melodyTitle.substring(0, maxLength-3)}...`
         }
+        else if(melodyTitle.length === 0) {
+            melody = 'okänd'
+        }
         else {
             melody = melodyTitle
         }

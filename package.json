@@ -15,6 +15,7 @@
     "@expo/samples": "^2.0.2",
     "@expo/vector-icons": "^5.2.0",
     "expo": "^20.0.0",
+    "fuse.js": "^3.1.0",
     "jumpstate": "^2.2.2",
     "prop-types": "^15.5.10",
     "ramda": "^0.24.1",

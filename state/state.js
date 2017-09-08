@@ -4,6 +4,7 @@ import {
     Actions
 } from 'jumpstate'
 import R from 'ramda'
+import { makeSongsSearchable } from '../util/songSearcher'
 
 const state = State({
     
@@ -25,6 +26,7 @@ const state = State({
     },
 
     setSongs(state, songs) {
+        makeSongsSearchable(R.values(songs))
         return R.assoc('songs', songs, state)
     },
 

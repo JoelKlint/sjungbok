@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect'
 import R from 'ramda'
+import searchSongs from '../util/songSearcher'
 
 const getCurrentSearchText = state => R.pathOr('', ['current', 'searchText'], state)
 
@@ -20,10 +21,7 @@ const getCurrentSong = createSelector(
 const getSongsMatchingSearchByTitle = createSelector(
     [getAllSongsSortedByTitle, getCurrentSearchText],
     (songs, searchText) => {
-        const filter = R.filter(s => {
-            return R.contains(searchText.toLowerCase(), s.title.toLowerCase())
-        })
-        return filter(songs)
+        return searchText.length > 0 ? searchSongs(searchText) : songs
     }
 )
 
