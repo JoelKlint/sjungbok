@@ -47,7 +47,7 @@ const state = State({
 
 export default state
 
-Effect('getAllSongs', () => {
+Effect('fetchAllSongs', () => {
     console.log('State is fetching songs')
     fetch('http://www.dsek.se/arkiv/sanger/api.php?all')
     .then(res => res.json())

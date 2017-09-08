@@ -3,17 +3,22 @@ import R from 'ramda'
 
 const getCurrentSearchText = state => R.pathOr('', ['current', 'searchText'], state)
 
-const getAllSongs = state => R.propOr({}, 'songs', state)
+const getAllSongsAsMap = state => R.propOr({}, 'songs', state)
+
+const getAllSongsSortedByTitle = createSelector(
+    [getAllSongsAsMap],
+    (songs) => R.sortBy(s => s.title.toLowerCase(), R.values(songs))
+)
 
 const getCurrentSongId = state => state.current.song
 
 const getCurrentSong = createSelector(
-    [getAllSongs, getCurrentSongId],
+    [getAllSongsAsMap, getCurrentSongId],
     (songs, id) => R.propOr({}, id, songs)
 )
 
 const getSongsMatchingSearchByTitle = createSelector(
-    [getAllSongs, getCurrentSearchText],
+    [getAllSongsSortedByTitle, getCurrentSearchText],
     (songs, searchText) => {
         const filter = R.filter(s => {
             return R.contains(searchText.toLowerCase(), s.title.toLowerCase())
@@ -25,7 +30,7 @@ const getSongsMatchingSearchByTitle = createSelector(
 const getAllFavouritesId = state => R.propOr([], 'favourites', state)
 
 const getAllFavourites = createSelector(
-    [getAllFavouritesId, getAllSongs],
+    [getAllFavouritesId, getAllSongsSortedByTitle],
     (favIds, songs) => R.filter(song => R.contains(song.id, favIds))(songs)
 )
 
@@ -36,11 +41,12 @@ const getCurrentSongIsFavourite = createSelector(
 
 
 export default {
-    getAllSongs,
+    getAllSongsAsMap,
     getAllFavouritesId,
     getAllFavourites,
     getCurrentSong,
     getCurrentSongIsFavourite,
     getCurrentSearchText,
     getSongsMatchingSearchByTitle,
+    getAllSongsSortedByTitle,
 }

@@ -14,7 +14,7 @@ class AllSongsScreen extends React.Component {
     }
 
     componentWillMount() {
-        Actions.getAllSongs()
+        Actions.fetchAllSongs()
     }
 
     render() {
