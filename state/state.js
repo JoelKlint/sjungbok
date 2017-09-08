@@ -9,7 +9,8 @@ const state = State({
     
     initial: {
         current: {
-            song: undefined
+            song: undefined,
+            searchText: '',
         },
         songs: {},
         favourites: [],
@@ -17,6 +18,10 @@ const state = State({
 
     setCurrentSong(state, id) {
         return R.assocPath(['current', 'song'], id, state)
+    },
+
+    setCurrentSearchText(state, text) {
+        return R.assocPath(['current', 'searchText'], text, state)
     },
 
     setSongs(state, songs) {

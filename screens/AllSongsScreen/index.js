@@ -5,7 +5,8 @@ import Selectors from '../../state/selectors'
 
 const stateful = connect((state, props) => {
     return {
-        songs: R.values(Selectors.getAllSongs(state)),
+        songs: R.values(Selectors.getSongsMatchingSearchByTitle(state)),
+        searchText: Selectors.getCurrentSearchText(state)
     }
 })
 
