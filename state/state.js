@@ -5,6 +5,7 @@ import {
 } from 'jumpstate'
 import R from 'ramda'
 import { makeSongsSearchable } from '../util/songSearcher'
+import searchSongs from '../util/songSearcher'
 
 const state = State({
     
@@ -15,6 +16,7 @@ const state = State({
         },
         songs: {},
         favourites: [],
+        searchResult: [],
     },
 
     setCurrentSong(state, id) {
@@ -26,8 +28,12 @@ const state = State({
     },
 
     setSongs(state, songs) {
-        makeSongsSearchable(R.values(songs))
-        return R.assoc('songs', songs, state)
+        const sortedSongs = R.values(R.sortBy(s => s.title.toLowerCase(), R.values(songs)))
+        makeSongsSearchable(sortedSongs)
+        return R.merge(state, {
+            songs: songs,
+            searchResult: sortedSongs
+        })
     },
 
     toggleFavourite(state, songId) {
@@ -43,6 +49,10 @@ const state = State({
                 break;
         }
         return R.assoc('favourites', newFavourites, state)
+    },
+
+    setSearchResult(state, songs) {
+        return R.assoc('searchResult', songs, state)
     }
 
 })
@@ -77,6 +87,13 @@ Effect('fetchAllSongs', () => {
         })(res)
         Actions.setSongs(res)
         console.log(`State fetched ${R.values(res).length} songs`)
+    })
+    .catch(err => console.error(err))
+})
+
+Effect('searchSongs', (text) => {
+    searchSongs(text).then(songs => {
+        Actions.setSearchResult(songs)
     })
     .catch(err => console.error(err))
 })

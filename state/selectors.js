@@ -25,6 +25,8 @@ const getSongsMatchingSearchByTitle = createSelector(
     }
 )
 
+const getSearchResult = state => state.searchResult
+
 const getAllFavouritesId = state => R.propOr([], 'favourites', state)
 
 const getAllFavourites = createSelector(
@@ -47,4 +49,5 @@ export default {
     getCurrentSearchText,
     getSongsMatchingSearchByTitle,
     getAllSongsSortedByTitle,
+    getSearchResult
 }

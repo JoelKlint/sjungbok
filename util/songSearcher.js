@@ -1,14 +1,36 @@
 import Fuse from 'fuse.js'
 
 let options = { 
-    keys: ['title', 'melodyTitle', 'lyrics'] 
+    keys: [
+        {
+            name: 'title',
+            weight: 3/5,
+        }, 
+        {
+            name: 'melodyTitle',
+            weight: 2/5
+        }, 
+        {
+            name: 'lyrics',
+            weight: 1/5
+        }
+    ] 
 }
 
 let fuse = new Fuse([], options)
+let allSongs = []
 
-const makeSongsSearchable = (songs) => fuse = new Fuse(songs, options)
+const makeSongsSearchable = (songs) => {
+    allSongs = songs
+    fuse = new Fuse(songs, options)
+}
 
-const search = (string) => fuse.search(string)
+const search = (string) => {
+    return new Promise((resolve, reject) => {
+        const res = string.length > 0 ? fuse.search(string) : allSongs
+        resolve(res)
+    })
+}
 
 export { 
     makeSongsSearchable
