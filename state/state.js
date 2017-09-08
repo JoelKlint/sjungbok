@@ -47,12 +47,32 @@ const state = State({
 
 export default state
 
+const unEscapeHtml = (text) => {
+    const toConvert = text || ''
+    const map = {
+      '&amp;': '&',
+      '&lt;': '<',
+      '&gt;': '>',
+      '&quot;': '"',
+      '&#039;': "'",
+    }
+    return toConvert.replace(/&.+?;/g, m => map[m])
+  }
+
 Effect('fetchAllSongs', () => {
     console.log('State is fetching songs')
     fetch('http://www.dsek.se/arkiv/sanger/api.php?all')
     .then(res => res.json())
     .then(res => {
-        res = R.mapObjIndexed((val, key, obj) => R.assoc('id', key, val))(res)
+        res = R.mapObjIndexed((song, id, allSongs) => {
+            const converted = {
+                id: id,
+                title: unEscapeHtml(song.title),
+                lyrics: unEscapeHtml(song.lyrics),
+                melodyTitle: unEscapeHtml(song.melodyTitle)
+            }
+            return R.merge(song, converted)
+        })(res)
         Actions.setSongs(res)
         console.log(`State fetched ${R.values(res).length} songs`)
     })
