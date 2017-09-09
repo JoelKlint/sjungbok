@@ -25,13 +25,16 @@ class AllSongsScreen extends React.Component {
 
     search(text) {
         this.setState({loading: true})
-        if(searchTimeout !== undefined) {
-            clearTimeout(searchTimeout)
-        }
-        searchTimeout = setTimeout(() => {
-            Actions.searchSongs(text)
-            this.setState({loading: false})
-        }, 300)
+        return new Promise((resolve, reject) => {
+            if(searchTimeout !== undefined) {
+                clearTimeout(searchTimeout)
+            }
+            searchTimeout = setTimeout(() => {
+                Actions.searchSongs(text)
+                .then(() => this.setState({loading: false}))
+                resolve()
+            }, 300)
+        })
     }
 
     render() {
