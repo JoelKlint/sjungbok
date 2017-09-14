@@ -1,45 +1,57 @@
 import React from 'react'
 import { View, StyleSheet, ActivityIndicator } from 'react-native'
 import { Actions } from 'jumpstate'
-import SearchBar from 'react-native-search-box';
+
+import SearchBar from '../../components/SearchBar'
+import { Ionicons } from '@expo/vector-icons';
+import Touchable from 'react-native-platform-touchable';
 
 import SongList from '../../components/SongList'
 import { navigationProps } from '../SongScreen'
 
 import Colors from '../../constants/Colors'
-
-const searchTimeout = undefined
+import R from 'ramda'
 
 class AllSongsScreen extends React.Component {
-    static navigationOptions = {
-        title: 'Songs',
+    static navigationOptions = ({ navigation }) => {
+        const { toggleSearchBar } = R.pathOr({}, ['state', 'params'], navigation)
+        return {
+            title: 'Songs',
+            headerRight: (
+                <Touchable onPress={() => toggleSearchBar()}>
+                    <Ionicons 
+                        name={'ios-search'} 
+                        size={25}
+                        style={styles.headerSearchButton}
+                    />
+                </Touchable>
+            )
+        }
     }
 
     state = {
-        loading: false
+        loading: false,
+        showSearch: false,
     }
 
     componentWillMount() {
         Actions.fetchAllSongs()
+        this.props.navigation.setParams({
+            toggleSearchBar: () => this.setState({showSearch: !this.state.showSearch})
+        })
     }
 
     search(text) {
         this.setState({loading: true})
-        return new Promise((resolve, reject) => {
-            if(searchTimeout !== undefined) {
-                clearTimeout(searchTimeout)
-            }
-            searchTimeout = setTimeout(() => {
-                Actions.searchSongs(text)
-                .then(() => this.setState({loading: false}))
-                resolve()
-            }, 300)
-        })
+        setTimeout(() => {
+            Actions.searchSongs(text)
+            .then(() => this.setState({loading: false}))
+        }, 1)
     }
 
     render() {
         const { songs, navigation } = this.props
-        const { loading } = this.state
+        const { loading, showSearch } = this.state
         let listView
         switch(loading) {
             case true:
@@ -61,9 +73,9 @@ class AllSongsScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <SearchBar 
-                    onChangeText={text => this.search(text)}
-                    onCancel={() => this.search('')}
-                    onDelete={() => this.search('')}
+                    onSearch={(text) => this.search(text)}
+                    onClear={() => this.search('')}
+                    show={showSearch}
                 />
                 {listView}
             </View>
@@ -74,6 +86,10 @@ class AllSongsScreen extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    headerSearchButton: {
+        paddingVertical: 8,
+        paddingHorizontal: 15,
     }
 })
 
