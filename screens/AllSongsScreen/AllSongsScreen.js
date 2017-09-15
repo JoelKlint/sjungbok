@@ -12,46 +12,44 @@ import { navigationProps } from '../SongScreen'
 import Colors from '../../constants/Colors'
 import R from 'ramda'
 
+let searchTimeout = null
+
 class AllSongsScreen extends React.Component {
     static navigationOptions = ({ navigation }) => {
-        const { toggleSearchBar } = R.pathOr({}, ['state', 'params'], navigation)
         return {
-            title: 'Songs',
-            headerRight: (
-                <Touchable onPress={() => toggleSearchBar()}>
-                    <Ionicons 
-                        name={'ios-search'} 
-                        size={25}
-                        style={styles.headerSearchButton}
-                    />
-                </Touchable>
-            )
+            title: `Sök`,
         }
     }
 
     state = {
         loading: false,
-        showSearch: false,
     }
 
     componentWillMount() {
         Actions.fetchAllSongs()
-        this.props.navigation.setParams({
-            toggleSearchBar: () => this.setState({showSearch: !this.state.showSearch})
-        })
     }
 
     search(text) {
+        /**
+         * Time to wait until the search should be executed
+         * This is user to reduce the amount of searches.
+         * Without it, a full search is performed for every letter entered
+         */
+        const searchDelay = 250
         this.setState({loading: true})
-        setTimeout(() => {
+        if(searchTimeout != null) {
+            clearTimeout(searchTimeout)
+            searchTimeout = null
+        }
+        searchTimeout = setTimeout(() => {
             Actions.searchSongs(text)
             .then(() => this.setState({loading: false}))
-        }, 1)
+        }, searchDelay)
     }
 
     render() {
         const { songs, navigation } = this.props
-        const { loading, showSearch } = this.state
+        const { loading } = this.state
         let listView
         switch(loading) {
             case true:
@@ -73,9 +71,8 @@ class AllSongsScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <SearchBar 
-                    onSearch={(text) => this.search(text)}
+                    onChangeText={(text) => this.search(text)}
                     onClear={() => this.search('')}
-                    show={showSearch}
                 />
                 {listView}
             </View>

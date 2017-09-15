@@ -16,33 +16,32 @@ class SearchBar extends React.Component {
     }
 
     render() {
-        const { onSearch, onClear, show } = this.props
-        if(show) {
-            return (
-                <View style={iosStyles.container}>
-                    <Ionicons name='ios-search' size={20} style={iosStyles.searchIcon}/>
-                    <View style={{flex: 1}}>
-                        <TextInput 
-                            value={this.state.text}
-                            onChangeText={(text) => this.setState({text: text})}
-                            autoFocus
-                            autoCorrect={false}
-                            placeholder='Search...'
-                            returnKeyType='search'
-                            returnKeyLabel='search'
-                            style={iosStyles.input}
-                            onSubmitEditing={() => onSearch(this.state.text)}
-                        />
-                    </View>
-                    <Touchable onPress={() => this.clear()}>
-                        <Ionicons name='ios-close' size={20} style={iosStyles.clearIcon}/>
-                    </Touchable>
+        const { onSearch, show, onChangeText } = this.props
+        return (
+            <View style={styles.container}>
+                <Ionicons name='ios-search' style={styles.icon}/>
+                <View style={{flex: 1}}>
+                    <TextInput 
+                        value={this.state.text}
+                        onChangeText={(text) => {
+                            this.setState({text: text})
+                            onChangeText && onChangeText(text)
+                        }}
+                        autoFocus
+                        autoCorrect={false}
+                        underlineColorAndroid='transparent'
+                        placeholder='Search...'
+                        returnKeyType='search'
+                        returnKeyLabel='search'
+                        style={styles.input}
+                        onSubmitEditing={() => onSearch && onSearch(this.state.text)}
+                    />
                 </View>
-            )
-        }
-        else {
-            return <View></View>
-        }
+                <Touchable onPress={() => this.clear()} >
+                    <Ionicons name='ios-close' style={styles.icon}/>
+                </Touchable>
+            </View>
+        )
     }
 }
 
@@ -51,19 +50,16 @@ const iosStyles = StyleSheet.create({
         flexDirection: 'row',
         height: 35,
         backgroundColor: 'white',
-        margin: 10,
+        margin: 5,
         borderRadius: 15,
         alignItems: 'center',
     },
-    searchIcon: {
+    icon: {
         flex: 0,
         backgroundColor: 'transparent',
-        paddingLeft: 10,
-    },
-    clearIcon: {
-        flex: 0,
-        backgroundColor: 'transparent',
-        paddingRight: 10,
+        marginHorizontal: 10,
+        fontSize: 20,
+        color: 'gray'
     },
     input: {
         marginHorizontal: 10,
@@ -71,6 +67,28 @@ const iosStyles = StyleSheet.create({
 })
 
 const androidStyles = StyleSheet.create({
+    container: {
+        flexDirection: 'row',
+        height: 50,
+        backgroundColor: 'white',
+        margin: 5,
+        borderRadius: 5,
+        alignItems: 'center',
+        elevation: 10,
+    },
+    icon: {
+        flex: 0,
+        backgroundColor: 'transparent',
+        marginHorizontal: 10,
+        fontSize: 25,
+        color: 'gray'
+    },
+    input: {
+        marginHorizontal: 10,
+        fontSize: 15,
+    }
 })
+
+const styles = Platform.OS === 'ios' ? iosStyles : androidStyles
 
 export default SearchBar
