@@ -1,6 +1,5 @@
 import React from 'react'
-import { 
-    TouchableHighlight, 
+import {
     View, 
     Text, 
     StyleSheet,
@@ -8,6 +7,7 @@ import {
 } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import Colors from '../constants/Colors'
+import Touchable from 'react-native-platform-touchable'
 
 class ListItem extends React.Component {
 
@@ -47,33 +47,28 @@ class ListItem extends React.Component {
             : 'md-arrow-forward'
 
         return (
-            <TouchableHighlight onPress={() => onPress(song.id)}>
-                <View style={styles.background}>
-                    <View style={styles.container}>
-                        <View style={styles.textContainer} >
-                            <Text style={styles.title}>
-                                {this.extractTitleString()}
-                            </Text>
-                            <Text style={styles.melody}>
-                                {this.extractMelodyString()}
-                            </Text>
-                        </View>
-                        <Ionicons 
-                            style={styles.arrow}
-                            name={iconName} 
-                            size={20}
-                        />
+            <Touchable onPress={() => onPress(song.id)}>
+                <View style={styles.container}>
+                    <View style={styles.textContainer} >
+                        <Text style={styles.title}>
+                            {this.extractTitleString()}
+                        </Text>
+                        <Text style={styles.melody}>
+                            {this.extractMelodyString()}
+                        </Text>
                     </View>
+                    <Ionicons 
+                        style={styles.arrow}
+                        name={iconName} 
+                        size={20}
+                    />
                 </View>
-            </TouchableHighlight>
+            </Touchable>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    background: {
-        backgroundColor: Colors.background,
-    },
     container: {
         flexDirection: 'row',
         justifyContent: 'space-between',

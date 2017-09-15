@@ -25,8 +25,8 @@ export default TabNavigator(
         switch (routeName) {
           case 'Songs':
             iconName = Platform.OS === 'ios'
-              ? `ios-information-circle${focused ? '' : '-outline'}`
-              : 'md-information-circle';
+              ? `ios-search${focused ? '' : '-outline'}`
+              : 'md-search';
             break;
           case 'Favourites':
             iconName = Platform.OS === 'ios'
@@ -47,6 +47,9 @@ export default TabNavigator(
     tabBarComponent: TabBarBottom,
     tabBarPosition: 'bottom',
     animationEnabled: false,
+    tabBarOptions: {
+      activeTintColor: Colors.tabIconSelected
+    },
     swipeEnabled: false,
   }
 );

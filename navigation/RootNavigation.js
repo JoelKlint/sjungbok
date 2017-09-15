@@ -5,6 +5,8 @@ import { StackNavigator } from 'react-navigation';
 import BrowseTabNavigator from './BrowseTabNavigator';
 import SongScreen from '../screens/SongScreen'
 
+import Colors from '../constants/Colors'
+
 import registerForPushNotificationsAsync from '../api/registerForPushNotificationsAsync';
 
 const RootStackNavigator = StackNavigator(
@@ -20,9 +22,12 @@ const RootStackNavigator = StackNavigator(
     navigationOptions: () => ({
       headerTitleStyle: {
         fontWeight: 'normal',
+        color: 'black',
       },
+      headerTintColor: '#f280a1',
     }),
-  }
+    headerMode: 'float',
+  },
 );
 
 export default class RootNavigator extends React.Component {

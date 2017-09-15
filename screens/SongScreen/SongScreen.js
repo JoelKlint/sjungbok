@@ -35,10 +35,10 @@ class AllSongsScreen extends React.Component {
                         name={iconName} 
                         style={styles.headerStar}
                         size={25}
-                        color={isFavourite === true ? 'red' : 'black'}
+                        color={isFavourite === true ? Colors.favourite : 'black'}
                     />
                 </TouchableWithoutFeedback>
-            )
+            ),
         }
     }
 
