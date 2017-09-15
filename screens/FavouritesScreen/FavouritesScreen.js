@@ -6,7 +6,7 @@ import { navigationProps } from '../SongScreen'
 
 class FavouritesScreen extends React.Component {
     static navigationOptions = {
-        title: 'My Hearts',
+        title: 'Favoriter',
     }
 
     render() {
@@ -26,7 +26,7 @@ class FavouritesScreen extends React.Component {
             return (
                 <View style={styles.container}>
                     <Text style={styles.title}>Ojsan...</Text>
-                    <Text style={styles.subtext}>Här var det tomt!</Text>
+                    <Text style={styles.subtext}>Här var det tomt</Text>
                 </View>
             )
         }

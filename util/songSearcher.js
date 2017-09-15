@@ -1,6 +1,8 @@
 import Fuse from 'fuse.js'
 
 let options = { 
+    shouldSort: true,
+    // tokenize: true,
     keys: [
         {
             name: 'title',
@@ -10,10 +12,10 @@ let options = {
             name: 'melodyTitle',
             weight: 2/5
         }, 
-        {
-            name: 'lyrics',
-            weight: 1/5
-        }
+        // {
+        //     name: 'lyrics',
+        //     weight: 1/5
+        // }
     ] 
 }
 
