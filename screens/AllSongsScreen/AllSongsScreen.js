@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, ActivityIndicator } from 'react-native'
+import { Text, View, StyleSheet, ActivityIndicator } from 'react-native'
 import { Actions } from 'jumpstate'
 
 import SearchBar from '../../components/SearchBar'
@@ -16,8 +16,10 @@ let searchTimeout = null
 
 class AllSongsScreen extends React.Component {
     static navigationOptions = ({ navigation }) => {
+        const { songCount } = R.pathOr({}, ['state', 'params'], navigation)
         return {
             title: `Sök`,
+            headerRight: <Text style={{marginHorizontal: 10}}>{`${songCount || 0} träffar`}</Text>
         }
     }
 
@@ -27,6 +29,14 @@ class AllSongsScreen extends React.Component {
 
     componentWillMount() {
         Actions.fetchAllSongs()
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if(this.props.songs.length !== nextProps.songs.length) {
+            this.props.navigation.setParams({
+                songCount: nextProps.songs.length
+            })
+        }
     }
 
     search(text) {

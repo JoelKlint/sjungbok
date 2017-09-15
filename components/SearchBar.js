@@ -19,7 +19,7 @@ class SearchBar extends React.Component {
         const { onSearch, show, onChangeText } = this.props
         return (
             <View style={styles.container}>
-                <Ionicons name='ios-search' style={styles.icon}/>
+                <Ionicons name={Platform.OS === 'ios' ? 'ios-search' : 'md-search'} style={styles.icon}/>
                 <View style={{flex: 1}}>
                     <TextInput 
                         value={this.state.text}
@@ -30,7 +30,7 @@ class SearchBar extends React.Component {
                         autoFocus
                         autoCorrect={false}
                         underlineColorAndroid='transparent'
-                        placeholder='Search...'
+                        placeholder='Titel eller melodi...'
                         returnKeyType='search'
                         returnKeyLabel='search'
                         style={styles.input}
@@ -38,7 +38,7 @@ class SearchBar extends React.Component {
                     />
                 </View>
                 <Touchable onPress={() => this.clear()} >
-                    <Ionicons name='ios-close' style={styles.icon}/>
+                    <Ionicons name={Platform.OS === 'ios' ? 'ios-close' : 'md-close'} style={styles.icon}/>
                 </Touchable>
             </View>
         )
@@ -72,9 +72,9 @@ const androidStyles = StyleSheet.create({
         height: 50,
         backgroundColor: 'white',
         margin: 5,
-        borderRadius: 5,
+        borderRadius: 3,
         alignItems: 'center',
-        elevation: 10,
+        elevation: 7,
     },
     icon: {
         flex: 0,
@@ -86,6 +86,7 @@ const androidStyles = StyleSheet.create({
     input: {
         marginHorizontal: 10,
         fontSize: 15,
+        height: 30,
     }
 })
 
