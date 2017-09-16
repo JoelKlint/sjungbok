@@ -18,8 +18,8 @@ class AllSongsScreen extends React.Component {
     static navigationOptions = ({ navigation }) => {
         const { songCount } = R.pathOr({}, ['state', 'params'], navigation)
         return {
-            title: `Sök`,
-            headerRight: <Text style={{marginHorizontal: 10}}>{`${songCount || 0} träffar`}</Text>
+            title: `Sångbok`,
+            headerRight: <Text style={{marginHorizontal: 10}}>{`${songCount || 0} sånger`}</Text>
         }
     }
 

@@ -25,8 +25,8 @@ export default TabNavigator(
         switch (routeName) {
           case 'Songs':
             iconName = Platform.OS === 'ios'
-              ? `ios-search${focused ? '' : '-outline'}`
-              : 'md-search';
+              ? `ios-book${focused ? '' : '-outline'}`
+              : 'md-book';
             break;
           case 'Favourites':
             iconName = Platform.OS === 'ios'
