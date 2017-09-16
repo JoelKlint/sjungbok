@@ -25,6 +25,7 @@ class AllSongsScreen extends React.Component {
 
     state = {
         loading: false,
+        showSearch: true,
     }
 
     componentWillMount() {
@@ -59,7 +60,7 @@ class AllSongsScreen extends React.Component {
 
     render() {
         const { songs, navigation } = this.props
-        const { loading } = this.state
+        const { loading, showSearch } = this.state
         let listView
         switch(loading) {
             case true:
@@ -74,6 +75,8 @@ class AllSongsScreen extends React.Component {
                             Actions.setCurrentSong(id)
                             navigation.navigate('Song', navigationProps(id))
                         }}
+                        onScrollUp={() => this.state.showSearch === false && this.setState({showSearch: true})}
+                        onScrollDown={() => this.state.showSearch === true && this.setState({showSearch: false})}
                     />
                 )
         }
@@ -83,6 +86,7 @@ class AllSongsScreen extends React.Component {
                 <SearchBar 
                     onChangeText={(text) => this.search(text)}
                     onClear={() => this.search('')}
+                    show={showSearch}
                 />
                 {listView}
             </View>
