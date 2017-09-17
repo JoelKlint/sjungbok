@@ -103,6 +103,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         marginHorizontal: margin,
         flex: 1,
+        marginBottom: 20,
     },
     headerStar: {
         paddingVertical: 8,
