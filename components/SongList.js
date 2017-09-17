@@ -6,6 +6,7 @@ import {
     StyleSheet
 } from 'react-native'
 import PropTypes from 'prop-types'
+import Colors from '../constants/Colors'
 
 import ListItem from './ListItem'
 
@@ -32,6 +33,16 @@ class SongList extends React.Component {
         }
     }
 
+    _renderSeparator = () => {
+        return (
+            <View style={{
+                height: 0.5,
+                marginLeft: 20,
+                backgroundColor: Colors.gray,
+            }}/>
+        )
+    }
+
     render() {
         const { songs, onPress } = this.props        
         return (
@@ -48,6 +59,7 @@ class SongList extends React.Component {
                         )
                     }}
                     onScroll={this._onScroll}
+                    ItemSeparatorComponent={this._renderSeparator}
                 />
             </View>
         )

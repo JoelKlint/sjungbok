@@ -21,4 +21,5 @@ export default {
   tabIconDefault: '#ccc',
   tabIconSelected: accent,
   favourite: accent,
+  gray: '#aaa',
 };

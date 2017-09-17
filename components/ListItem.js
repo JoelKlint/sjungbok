@@ -61,6 +61,7 @@ class ListItem extends React.Component {
                         style={styles.arrow}
                         name={iconName} 
                         size={20}
+                        color={Colors.accent}
                     />
                 </View>
             </Touchable>
@@ -75,8 +76,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginLeft: 20,
         paddingRight: 20,
-        borderBottomWidth: 0.5, 
-        borderColor: '#aaa',
     },
     textContainer: {
         flex: 1,
