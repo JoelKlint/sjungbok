@@ -2,6 +2,7 @@ import React from 'react'
 import { 
     Platform,
     View,
+    Text,
     FlatList,
     StyleSheet
 } from 'react-native'
@@ -44,25 +45,35 @@ class SongList extends React.Component {
     }
 
     render() {
-        const { songs, onPress } = this.props        
-        return (
-            <View style={styles.container}>
-                <FlatList 
-                    data={songs}
-                    keyExtractor={(item, index) => item.id}
-                    renderItem={({item}) => {
-                        return (
-                            <ListItem 
-                                song={item}
-                                onPress={onPress}
-                            />
-                        )
-                    }}
-                    onScroll={this._onScroll}
-                    ItemSeparatorComponent={this._renderSeparator}
-                />
-            </View>
-        )
+        const { songs, onPress } = this.props
+        if(songs.length !== 0) {
+            return (
+                <View style={styles.container}>
+                    <FlatList 
+                        data={songs}
+                        keyExtractor={(item, index) => item.id}
+                        renderItem={({item}) => {
+                            return (
+                                <ListItem 
+                                    song={item}
+                                    onPress={onPress}
+                                />
+                            )
+                        }}
+                        onScroll={this._onScroll}
+                        ItemSeparatorComponent={this._renderSeparator}
+                    />
+                </View>
+            )
+        }    
+        else {
+            return (
+                <View style={styles.emptyContainer}>
+                    <Text style={styles.emptyTitle}>Ojsan...</Text>
+                    <Text style={styles.emptySubtext}>Det verkar inte finnas några sånger</Text>
+                </View>
+            )
+        }    
     }
 }
 
@@ -76,5 +87,21 @@ export default SongList
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    emptyContainer: {
+        backgroundColor: Colors.background,
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginHorizontal: 20,
+    },
+    emptyTitle: {
+        fontSize: 50,
+        marginBottom: 40,
+        textAlign: 'center',
+    },
+    emptySubtext: {
+        fontSize: 30,
+        textAlign: 'center',
     }
 })

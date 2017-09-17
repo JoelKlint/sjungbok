@@ -52,8 +52,10 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 50,
         marginBottom: 40,
+        textAlign: 'center',
     },
     subtext: {
         fontSize: 30,
+        textAlign: 'center',
     }
 })
