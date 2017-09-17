@@ -26,12 +26,12 @@ export default TabNavigator(
           case 'Songs':
             iconName = Platform.OS === 'ios'
               ? `ios-book${focused ? '' : '-outline'}`
-              : 'md-book';
+              : `md-book`;
             break;
           case 'Favourites':
             iconName = Platform.OS === 'ios'
               ? `ios-heart${focused ? '' : '-outline'}`
-              : 'md-heart';
+              : `md-heart${focused ? '' : '-outline'}`;
             break;
         }
         return (
