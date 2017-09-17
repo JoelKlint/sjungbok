@@ -26,7 +26,6 @@ const RootStackNavigator = StackNavigator(
       },
       headerTintColor: '#f280a1',
     }),
-    headerMode: 'float',
   },
 );
 

@@ -75,8 +75,8 @@ class AllSongsScreen extends React.Component {
                             Actions.setCurrentSong(id)
                             navigation.navigate('Song', navigationProps(id))
                         }}
-                        onScrollUp={() => this.state.showSearch === false && this.setState({showSearch: true})}
-                        onScrollDown={() => this.state.showSearch === true && this.setState({showSearch: false})}
+                        //onScrollUp={() => this.state.showSearch === false && this.setState({showSearch: true})}
+                        //onScrollDown={() => this.state.showSearch === true && this.setState({showSearch: false})}
                     />
                 )
         }
@@ -86,7 +86,7 @@ class AllSongsScreen extends React.Component {
                 <SearchBar 
                     onChangeText={(text) => this.search(text)}
                     onClear={() => this.search('')}
-                    show={showSearch}
+                    show={true}
                 />
                 {listView}
             </View>
