@@ -13,7 +13,7 @@ import R from 'ramda'
 
 class AllSongsScreen extends React.Component {
     static navigationOptions = ({ navigation }) => {
-        const { title, isFavourite, toggleFavourite } = navigation.state.params
+        const { song, toggleFavourite, isFavourite } = navigation.state.params
         let iconName = ''
         switch(isFavourite) {
             case true:
@@ -29,9 +29,9 @@ class AllSongsScreen extends React.Component {
                 break;
         }
         return {
-            title: title,
+            title: song.title,
             headerRight: (
-                <TouchableWithoutFeedback onPress={toggleFavourite}>
+                <TouchableWithoutFeedback onPress={() => toggleFavourite && toggleFavourite()}>
                     <Ionicons 
                         name={iconName} 
                         style={styles.headerStar}
@@ -43,22 +43,26 @@ class AllSongsScreen extends React.Component {
         }
     }
 
+    componentWillMount() {
+        this.props.navigation.setParams({toggleFavourite: this._toggleFavourite})
+    }
+
     // Send relevant prop updates to header via react navigation
     componentWillReceiveProps(nextProps) {
-        const props = this.props
-        const navProps = this.props.navigation.state.params
-        let newParams = {}
-        if(nextProps.isFavourite !== props.isFavourite)
-            newParams.isFavourite = nextProps.isFavourite
-        if(navProps.title !== nextProps.song.title)
-            newParams.title = nextProps.song.title
-        if(Object.keys(newParams).length !== 0) {
-            props.navigation.setParams(newParams)
+        if(this.props.isFavourite !== nextProps.isFavourite) {
+            this.props.navigation.setParams({
+                isFavourite: nextProps.isFavourite
+            })
         }
     }
 
+    _toggleFavourite = () => {
+        const id = this.props.navigation.state.params.song.id
+        this.props.toggleFavourite()
+    }
+
     render() {
-        const { song } = this.props
+        const { song } = this.props.navigation.state.params
         return (
             <View style={styles.background}>
                 <View style={styles.container} >

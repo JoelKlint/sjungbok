@@ -1,24 +1,33 @@
 import SongScreen from './SongScreen'
-import Selectors from '../../state/selectors'
 import { connect } from 'react-redux'
-import { Actions, getState } from 'jumpstate'
+import store from '../../state'
+import R from 'ramda'
+import { toggleFavourite } from '../../state/actions'
 
-export const navigationProps = (id) => {
-    const state = getState()
-    const song = Selectors.getCurrentSong(state)
+export const navigationProps = (song) => {
+    const state = store.getState()
+    const favourites = state.favourites || []
     return {
-        title: song.title,
-        isFavourite: Selectors.getCurrentSongIsFavourite(state),
-        toggleFavourite: () => Actions.toggleFavourite(song.id),
+        isFavourite: R.contains(song.id, favourites),
+        song
     }
 }
 
-const stateful = connect((state, props) => {
-    return {
-        song: Selectors.getCurrentSong(state),
-        isFavourite: Selectors.getCurrentSongIsFavourite(state)
+const stateful = connect(
+    (state, props) => {
+        const favourites = state.favourites || []
+        const songId = props.navigation.state.params.song.id || -1
+        return {
+            isFavourite: R.contains(songId, favourites)
+        }
+    },
+    (dispatch, props) => {
+        const id = props.navigation.state.params.song.id
+        return {
+            toggleFavourite: () => dispatch(toggleFavourite(id))
+        }
     }
-})
+)
 
 
 export default stateful(SongScreen)

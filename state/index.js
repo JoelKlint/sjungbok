@@ -1,12 +1,12 @@
-import { CreateJumpstateMiddleware } from 'jumpstate'
 import { createStore, applyMiddleware } from 'redux'
 
-import state from './state'
+import songs from './songReducer'
+import thunk from 'redux-thunk'
 
 const store = createStore(
-    state,
+    songs,
     applyMiddleware(
-        CreateJumpstateMiddleware()
+        thunk
     )
 )
 

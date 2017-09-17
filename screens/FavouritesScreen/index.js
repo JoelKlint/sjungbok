@@ -5,7 +5,8 @@ import R from 'ramda'
 
 const stateful = connect((state, props) => {
     return {
-        songs: R.values(Selectors.getAllFavourites(state))
+        favouriteSongs: R.values(Selectors.getAllFavourites(state)),
+        allSongs: Selectors.getAllSongsAsMap(state)
     }
 })
 

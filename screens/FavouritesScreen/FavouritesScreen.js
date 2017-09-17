@@ -1,7 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import SongList from '../../components/SongList'
-import { Actions } from 'jumpstate'
 import { navigationProps } from '../SongScreen'
 import Colors from '../../constants/Colors'
 
@@ -11,15 +10,15 @@ class FavouritesScreen extends React.Component {
     }
 
     render() {
-        const { songs, navigation } = this.props
-        if(songs.length !== 0) {
+        const { favouriteSongs, navigation, allSongs } = this.props
+        if(favouriteSongs.length !== 0) {
             return (
                 <View style={styles.container}>
                     <SongList 
-                        songs={songs} 
+                        songs={favouriteSongs} 
                         onPress={id => {
-                            Actions.setCurrentSong(id)
-                            navigation.navigate('Song', navigationProps(id))
+                            const song = allSongs[id]
+                            navigation.navigate('Song', navigationProps(song))
                         }}
                     />
                 </View>
