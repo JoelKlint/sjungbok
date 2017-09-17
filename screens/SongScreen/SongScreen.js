@@ -4,7 +4,8 @@ import {
     ScrollView, 
     Text,
     Platform,
-    TouchableWithoutFeedback
+    TouchableWithoutFeedback,
+    View
 } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../../constants/Colors'
@@ -59,22 +60,49 @@ class AllSongsScreen extends React.Component {
     render() {
         const { song } = this.props
         return (
-            <ScrollView style={styles.container}>
-                <Text style={styles.text}>{song.lyrics}</Text>
-            </ScrollView>
+            <View style={styles.background}>
+                <View style={styles.container} >
+                    <Text style={styles.title}>{song.title}</Text>
+                    <Text style={styles.melodyTitle}>Melodi: {song.melodyTitle}</Text>
+                    <ScrollView>
+                        <Text style={styles.text}>{song.lyrics}</Text>
+                    </ScrollView>
+                </View>
+            </View>
         )
     }
 }
 
 export default AllSongsScreen
 
+const margin = 20
+
 const styles = StyleSheet.create({
-    container: {
+    background: {
         backgroundColor: Colors.background,
+        flex: 1
+    },
+    container: {
+        flex: 1,
+    },
+    title: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginTop: 20,
+        marginBottom: 2,
+        marginHorizontal: margin,
+    },
+    melodyTitle: {
+        fontSize: 15,
+        marginHorizontal: margin,
+        marginBottom: 20,
+        fontStyle: 'italic',
+        color: Colors.subText,
     },
     text: {
-        margin: 20,
-        fontSize: 20,
+        fontSize: 18,
+        marginHorizontal: margin,
+        flex: 1,
     },
     headerStar: {
         paddingVertical: 8,
