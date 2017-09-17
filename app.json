@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "dsek-sjungbok",
+    "name": "D-sek Sångbok",
     "description": "No description",
     "slug": "dsek-sjungbok",
     "privacy": "unlisted",
@@ -14,7 +14,7 @@
       "color": "#000000"
     },
     "loading": {
-      "icon": "./assets/icons/loading-icon.png",
+      "icon": "./assets/icons/app-icon.png",
       "hideExponentText": false
     },
     "packagerOpts": {
