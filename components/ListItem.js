@@ -10,35 +10,7 @@ import Colors from '../constants/Colors'
 import Touchable from 'react-native-platform-touchable'
 
 class ListItem extends React.Component {
-
-    extractTitleString = () => {
-        const { song } = this.props
-        const maxLength = 40
-        if(song.title.length > maxLength) {
-            return `${song.title.substring(0, maxLength-3)}...`
-        }
-        else {
-            return song.title
-        }
-    }
-
-    extractMelodyString = () => {
-        const { song } = this.props
-        const maxLength = 35
-        let melody = ''
-        const melodyTitle = song.melodyTitle || ''
-        if(melodyTitle.length > maxLength) {
-            melody = `${melodyTitle.substring(0, maxLength-3)}...`
-        }
-        else if(melodyTitle.length === 0) {
-            melody = 'okänd'
-        }
-        else {
-            melody = melodyTitle
-        }
-        return 'mel: ' + melody
-    }
-
+    
     render() {
         const { song, onPress } = this.props
 
@@ -50,11 +22,11 @@ class ListItem extends React.Component {
             <Touchable onPress={() => onPress(song.id)}>
                 <View style={styles.container}>
                     <View style={styles.textContainer} >
-                        <Text style={styles.title}>
-                            {this.extractTitleString()}
+                        <Text numberOfLines={1} style={styles.title}>
+                            {song.title || 'Inte angivet'}
                         </Text>
-                        <Text style={styles.melody}>
-                            {this.extractMelodyString()}
+                        <Text numberOfLines={1} style={styles.melody}>
+                            Mel: {song.melodyTitle || 'Inte angivet'}
                         </Text>
                     </View>
                     <Ionicons 
