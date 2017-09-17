@@ -45,7 +45,7 @@ class SongList extends React.Component {
     }
 
     render() {
-        const { songs, onPress } = this.props
+        const { songs, onPress, onRefresh, refreshing } = this.props
         if(songs.length !== 0) {
             return (
                 <View style={styles.container}>
@@ -62,6 +62,8 @@ class SongList extends React.Component {
                         }}
                         onScroll={this._onScroll}
                         ItemSeparatorComponent={this._renderSeparator}
+                        onRefresh={onRefresh}
+                        refreshing={refreshing}
                     />
                 </View>
             )

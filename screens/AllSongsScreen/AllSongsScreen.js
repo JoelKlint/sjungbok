@@ -28,10 +28,11 @@ class AllSongsScreen extends React.Component {
         loading: false,
         showSearch: true,
         searchResult: null,
+        fetching: false,
     }
 
     componentWillMount() {
-        this.props.fetchRemoteSongs()
+        this._fetchRemoteSongs()
         .then(() => this.search(''))
     }
 
@@ -48,6 +49,12 @@ class AllSongsScreen extends React.Component {
         this.props.navigation.setParams({
             songCount: songs.length
         })
+    }
+
+    _fetchRemoteSongs = () => {
+        this.setState({fetching: true})
+        return this.props.fetchRemoteSongs()
+        .then(() => this.setState({fetching: false}))
     }
 
     search(text) {
@@ -77,7 +84,7 @@ class AllSongsScreen extends React.Component {
 
     render() {
         const { allSongs, navigation } = this.props
-        const { loading, showSearch, searchResult } = this.state
+        const { loading, showSearch, searchResult, fetching } = this.state
         let listView
         switch(loading) {
             case true:
@@ -92,6 +99,8 @@ class AllSongsScreen extends React.Component {
                             const song = allSongs[id]
                             navigation.navigate('Song', navigationProps(song))
                         }}
+                        onRefresh={() => this._fetchRemoteSongs()}
+                        refreshing={fetching}
                         //onScrollUp={() => this.state.showSearch === false && this.setState({showSearch: true})}
                         //onScrollDown={() => this.state.showSearch === true && this.setState({showSearch: false})}
                     />

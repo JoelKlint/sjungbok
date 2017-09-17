@@ -9,7 +9,7 @@ import { Ionicons } from '@expo/vector-icons'
 import Colors from '../constants/Colors'
 import Touchable from 'react-native-platform-touchable'
 
-class ListItem extends React.Component {
+class ListItem extends React.PureComponent {
     
     render() {
         const { song, onPress } = this.props
