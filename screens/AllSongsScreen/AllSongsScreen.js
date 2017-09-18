@@ -29,10 +29,18 @@ class AllSongsScreen extends React.Component {
         showSearch: true,
         searchResult: null,
         fetching: false,
+        searchQuery: '',
     }
 
     componentWillMount() {
-        this.search('') //Populate searchResults on mount
+        this._search(this.props.searchQuery || '') //Populate searchResults on mount
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        // Execute new search if songs updated
+        if(prevProps.allSongs !== this.props.allSongs) {
+            this._search(this.state.searchQuery || '')
+        }
     }
 
     _setSearchResult = (songs) => {
@@ -48,7 +56,7 @@ class AllSongsScreen extends React.Component {
         .then(() => this.setState({fetching: false}))
     }
 
-    search(text) {
+    _search(text) {
         if(text === '') {
             searchSongs('').then(songs => this._setSearchResult(songs))
         }
@@ -73,9 +81,14 @@ class AllSongsScreen extends React.Component {
         }
     }
 
+    setSearchQuery(text) {
+        this.setState({searchQuery: text})
+        this._search(text)
+    }
+
     render() {
         const { allSongs, navigation } = this.props
-        const { loading, showSearch, searchResult, fetching } = this.state
+        const { loading, showSearch, searchResult, fetching, searchQuery } = this.state
         let listView
         switch(loading) {
             case true:
@@ -101,9 +114,10 @@ class AllSongsScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <SearchBar 
-                    onChangeText={(text) => this.search(text)}
-                    onClear={() => this.search('')}
+                    onChangeText={(text) => this.setSearchQuery(text)}
+                    onClear={() => this.setSearchQuery('')}
                     show={true}
+                    value={searchQuery}
                 />
                 {listView}
             </View>

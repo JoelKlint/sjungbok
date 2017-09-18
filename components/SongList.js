@@ -44,38 +44,39 @@ class SongList extends React.Component {
         )
     }
 
+    _renderListEmptyComponent = () => {
+        return (
+            <View style={styles.emptyContainer}>
+                <Text style={styles.emptyTitle}>Ojsan...</Text>
+                <Text style={styles.emptySubtext}>Här var det tomt</Text>
+                <Text style={styles.emptySubtext}>Dra mig neråt för att hämta nya låtar</Text>
+            </View>
+        )
+    }
+
     render() {
         const { songs, onPress, onRefresh, refreshing } = this.props
-        if(songs.length !== 0) {
-            return (
-                <View style={styles.container}>
-                    <FlatList 
-                        data={songs}
-                        keyExtractor={(item, index) => item.id}
-                        renderItem={({item}) => {
-                            return (
-                                <ListItem 
-                                    song={item}
-                                    onPress={onPress}
-                                />
-                            )
-                        }}
-                        onScroll={this._onScroll}
-                        ItemSeparatorComponent={this._renderSeparator}
-                        onRefresh={onRefresh}
-                        refreshing={refreshing}
-                    />
-                </View>
-            )
-        }    
-        else {
-            return (
-                <View style={styles.emptyContainer}>
-                    <Text style={styles.emptyTitle}>Ojsan...</Text>
-                    <Text style={styles.emptySubtext}>Det verkar inte finnas några sånger</Text>
-                </View>
-            )
-        }    
+        return (
+            <View style={styles.container}>
+                <FlatList 
+                    data={songs}
+                    keyExtractor={(item, index) => item.id}
+                    renderItem={({item}) => {
+                        return (
+                            <ListItem 
+                                song={item}
+                                onPress={onPress}
+                            />
+                        )
+                    }}
+                    onScroll={this._onScroll}
+                    ItemSeparatorComponent={this._renderSeparator}
+                    onRefresh={onRefresh}
+                    refreshing={refreshing}
+                    ListEmptyComponent={() => this._renderListEmptyComponent()}
+                />
+            </View>
+        )  
     }
 }
 
@@ -92,18 +93,19 @@ const styles = StyleSheet.create({
     },
     emptyContainer: {
         backgroundColor: Colors.background,
-        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         marginHorizontal: 20,
     },
     emptyTitle: {
+        paddingTop: 40,
         fontSize: 50,
         marginBottom: 40,
         textAlign: 'center',
     },
     emptySubtext: {
-        fontSize: 30,
+        fontSize: 20,
         textAlign: 'center',
+        marginBottom: 20,
     }
 })

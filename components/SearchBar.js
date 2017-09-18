@@ -5,18 +5,13 @@ import Touchable from 'react-native-platform-touchable';
 
 class SearchBar extends React.Component {
 
-    state = {
-        text: ''
-    }
-
     clear() {
         const { onClear } = this.props
-        this.setState({text: ''})
         onClear && onClear('')
     }
 
     render() {
-        const { onSearch, show, onChangeText } = this.props
+        const { onSearch, show, onChangeText, value } = this.props
         if(show) {
             return (
                 <View style={styles.background}>
@@ -24,9 +19,8 @@ class SearchBar extends React.Component {
                         <Ionicons name={Platform.OS === 'ios' ? 'ios-search' : 'md-search'} style={styles.icon}/>
                         <View style={{flex: 1}}>
                             <TextInput 
-                                value={this.state.text}
+                                value={value}
                                 onChangeText={(text) => {
-                                    this.setState({text: text})
                                     onChangeText && onChangeText(text)
                                 }}
                                 autoCorrect={false}
@@ -35,7 +29,7 @@ class SearchBar extends React.Component {
                                 returnKeyType='search'
                                 returnKeyLabel='search'
                                 style={styles.input}
-                                onSubmitEditing={() => onSearch && onSearch(this.state.text)}
+                                onSubmitEditing={() => onSearch && onSearch(value)}
                             />
                         </View>
                         <Touchable onPress={() => this.clear()} >
