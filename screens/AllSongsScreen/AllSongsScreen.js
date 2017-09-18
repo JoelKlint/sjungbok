@@ -32,16 +32,7 @@ class AllSongsScreen extends React.Component {
     }
 
     componentWillMount() {
-        this._fetchRemoteSongs()
-        .then(() => this.search(''))
-    }
-
-    componentWillReceiveProps(nextProps) { 
-        if(this.props.allSongs.length !== nextProps.allSongs.length) {
-            this.props.navigation.setParams({
-                songCount: nextProps.allSongs.length
-            })
-        }
+        this.search('') //Populate searchResults on mount
     }
 
     _setSearchResult = (songs) => {

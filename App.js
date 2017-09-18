@@ -6,6 +6,7 @@ import RootNavigation from './navigation/RootNavigation';
 import Colors from './constants/Colors'
 
 import store from './state'
+import { rehydrateReduxState } from './state'
 import { Provider } from 'react-redux'
 
 export default class App extends React.Component {
@@ -38,6 +39,7 @@ export default class App extends React.Component {
   async _loadAssetsAsync() {
     try {
       await Promise.all([
+        rehydrateReduxState(),
       ]);
     } catch (e) {
       // In this case, you might want to report the error to your error
