@@ -12,7 +12,11 @@ const getAllFavouritesId = state => R.propOr([], 'favourites', state)
 
 const getAllFavourites = createSelector(
     [getAllFavouritesId, getAllSongs],
-    (favIds, songs) => R.filter(song => R.contains(song.id, favIds))(songs)
+    (favIds, songs) => R.pipe(
+        R.filter(song => R.contains(song.id, favIds)),
+        R.sortBy(s => s.title.toLowerCase())
+    )(songs)
+    
 )
 
 export default {
